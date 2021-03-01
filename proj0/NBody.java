@@ -1,5 +1,5 @@
 public class NBody {
-    public static Body readBodies(In in){
+    public static Planet readBodies(In in){
 
         double xPos = in.readDouble();
         double yPos = in.readDouble();
@@ -8,7 +8,7 @@ public class NBody {
         double m = in.readDouble();
         String img = in.readString();
 
-        return new Body(xPos, yPos, xVel, yVel, m, img);
+        return new Planet(xPos, yPos, xVel, yVel, m, img);
     }
 
     public static void main(String[] args) {
@@ -18,7 +18,7 @@ public class NBody {
 
         In in = new In(filename);
         int num = in.readInt();
-        Body[] bodies = new Body[num];
+        Planet[] bodies = new Planet[num];
         double radius = in.readDouble();
         for(int i = 0; i < num; i++){
             bodies[i] = readBodies(in);
@@ -46,7 +46,7 @@ public class NBody {
 
             StdDraw.picture(0, 0, "images/starfield.jpg");
 
-            for(Body b:bodies){
+            for(Planet b:bodies){
                 b.draw();
             }
             StdDraw.show();

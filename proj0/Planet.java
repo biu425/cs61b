@@ -1,4 +1,4 @@
-public class Body{
+public class Planet{
     public double xxPos; 
     public double yyPos;
     public double xxVel;
@@ -6,7 +6,7 @@ public class Body{
     public double mass;
     public String imgFileName;
 
-    public Body(double xP, double yP, double xV, double yV, double m, String img){
+    public Planet(double xP, double yP, double xV, double yV, double m, String img){
         xxPos = xP;
         yyPos = yP;
         xxVel = xV;
@@ -15,7 +15,7 @@ public class Body{
         imgFileName = img;
     }
 
-    public Body(Body b){
+    public Planet(Planet b){
         xxPos = b.xxPos;
         yyPos = b.yyPos;
         xxVel = b.xxVel;
@@ -24,28 +24,28 @@ public class Body{
         imgFileName = b.imgFileName;
     }
 
-    public double calcDistance(Body b){
+    public double calcDistance(Planet b){
         double distX = b.xxPos - xxPos;
         double distY = b.yyPos - yyPos;
         double dist = Math.sqrt(distX * distX + distY * distY);
         return dist;
     }
     
-    public double calcForceExertedBy(Body b){
+    public double calcForceExertedBy(Planet b){
         final double G = 6.67e-11;
         double r = calcDistance(b);
         double F = G * mass * b.mass /( r * r);
         return F;
     }
 
-    public double calcForceExertedByX(Body b){
+    public double calcForceExertedByX(Planet b){
         double F = calcForceExertedBy(b);
         double r = calcDistance(b);
         double distX = b.xxPos - xxPos;
         double fX = F * distX / r;
         return fX;
     }
-    public double calcForceExertedByY(Body b){
+    public double calcForceExertedByY(Planet b){
         double F = calcForceExertedBy(b);
         double r = calcDistance(b);
         double distY = b.yyPos - yyPos;
@@ -53,7 +53,7 @@ public class Body{
         return fY;
     }
 
-    public boolean equals(Body b){
+    public boolean equals(Planet b){
         if (xxPos == b.xxPos && yyPos == b.yyPos && xxVel == b.xxVel && yyVel == b.yyVel && mass == b.mass && imgFileName == b.imgFileName ){
             return true;
         } else {
@@ -61,9 +61,9 @@ public class Body{
         }
     }
     
-    public double calcNetForceExertedByX(Body[] allBodys){
+    public double calcNetForceExertedByX(Planet[] allBodys){
         double fXNet = 0.0;
-        for (Body b: allBodys){
+        for (Planet b: allBodys){
             if (equals(b)){
                 continue;
             } else {
@@ -74,9 +74,9 @@ public class Body{
         return fXNet;
     }
 
-    public double calcNetForceExertedByY(Body[] allBodys){
+    public double calcNetForceExertedByY(Planet[] allBodys){
         double fYNet = 0.0;
-        for (Body b: allBodys){
+        for (Planet b: allBodys){
             if (equals(b)){
                 continue;
             } else {
