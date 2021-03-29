@@ -67,4 +67,35 @@ public class SLList{
         System.out.println(L.size());
         
     }
+
+/** insert int x at the given position.
+ * if the position is after the end of the list, insert the new node at the end. */    
+    private class IntNode{
+        public int item;
+        public IntNode next;
+        public IntNode(int item, IntNode next){
+            this.item = item;
+            this.next = next;
+        }    
+        private IntNode first;
+        
+        public void addFirst(int x){
+            first = new IntNode(x,first);
+        }
+    }
+
+    public void insert(int x, int position){
+        if(first == null && position == 0){
+            addFirst(x);
+        }
+        IntNode currentNode = first;
+        while (position > 1 && currentNode != null){
+            position = position - 1;
+            currentNode = currentNode.next;
+        }
+        IntNode newNode = new IntNode(x, currentNode.next);
+        currentNode.next = newNode;
+    }
 }
+
+
