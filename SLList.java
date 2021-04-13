@@ -85,7 +85,7 @@ public class SLList{
     }
 
     public void insert(int x, int position){
-        if(first == null && position == 0){
+        if(first == null && position == 0){ /**basic case */
             addFirst(x);
         }
         IntNode currentNode = first;
@@ -96,6 +96,41 @@ public class SLList{
         IntNode newNode = new IntNode(x, currentNode.next);
         currentNode.next = newNode;
     }
+
+    public void reverse(){ /** iteratively */
+        if (first == null || first.next == null){
+            return;
+        }
+        IntNode ptr = first.next;
+        first.next = null;
+
+        while(ptr != null){
+            IntNode temp = ptr.next;
+            ptr.next = first;
+            first = ptr;
+            ptr = temp;
+        }
+    }
+    public void reverseRecur(){
+        first = reverseHelper(first);
+    }
+
+    private IntNode reverseHelper(IntNode lst){
+        if(lst == null || lst.next == null){
+            return lst;
+        }else{
+            IntNode endOfReversed = lst.next;
+            IntNode reversed = reverseHelper(lst.next);
+            endOfReversed.next = lst;
+            lst.next = null;
+
+            return reversed;
+        }
+    }
+
+
 }
+
+
 
 
