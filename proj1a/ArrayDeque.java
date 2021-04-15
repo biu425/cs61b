@@ -71,10 +71,7 @@ public class ArrayDeque<T> {
         int currentFirst = indexPlus(nextFirst);
         int currentLast = indexMinus(nextLast);
 
-        if (size == 0) {
-            System.arraycopy(t, 0, newT, 0, newCapacity);
-        }
-        if (currentFirst <= currentLast ) {
+        if (nextFirst < nextLast ) {
             System.arraycopy(t, currentFirst, newT, 0, size);
         } else {
             int lengthFirst = capacity - currentFirst;
