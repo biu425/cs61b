@@ -17,6 +17,20 @@ public class ArrayDeque<T> {
         nextLast = nextFirst + 1;
     }
 
+    public void addFirst(T item) {
+        expand();
+        t[nextFirst] = item;
+        nextFirst = indexMinus(nextFirst);
+        size++;
+    }
+
+    public void addLast(T item) {
+        expand();
+        t[nextLast] = item;
+        nextLast = indexPlus(nextLast);
+        size++;
+    }
+
     //get the current index according to the circular structure
     private int indexPlus(int index) {
         if (index == capacity - 1) {
@@ -57,7 +71,7 @@ public class ArrayDeque<T> {
         int currentFirst = indexPlus(nextFirst);
         int currentLast = indexMinus(nextLast);
 
-        if (currentFirst < currentLast) {
+        if (currentFirst <= currentLast) {
             System.arraycopy(t, currentFirst, newT, 0, size);
         } else {
             int lengthFirst = capacity - currentFirst;
@@ -66,23 +80,9 @@ public class ArrayDeque<T> {
             System.arraycopy(t, 0, newT, lengthFirst, lengthLast);
         }
         nextFirst = newCapacity - 1;
-        nextLast = size;
         capacity = newCapacity;
+        nextLast = size;
         t = newT;
-    }
-
-    public void addFirst(T item) {
-        expand();
-        t[nextFirst] = item;
-        nextFirst = indexMinus(nextFirst);
-        size++;
-    }
-
-    public void addLast(T item) {
-        expand();
-        t[nextLast] = item;
-        nextLast = indexPlus(nextLast);
-        size++;
     }
 
     public boolean isEmpty() {
@@ -108,7 +108,6 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
-        contract();
         if (isEmpty()) {
             return null;
         }
@@ -118,11 +117,11 @@ public class ArrayDeque<T> {
         nextFirst = currentFirst;
         size--;
 
+        contract();
         return removedItem;
     }
 
     public T removeLast() {
-        contract();
         if (isEmpty()) {
             return null;
         }
@@ -131,7 +130,7 @@ public class ArrayDeque<T> {
         t[currentLast] = null;
         nextLast = currentLast;
         size--;
-
+        contract();
         return removedItem;
     }
 
