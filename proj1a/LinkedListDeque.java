@@ -1,13 +1,15 @@
+import org.junit.Test;
+
 public class LinkedListDeque<T> {
     private Node sentinel;
     private int size;
 
     private class Node {
-        T item;
-        Node previous;
-        Node next;
+        public T item;
+        public Node previous;
+        public Node next;
 
-        Node(T i, Node p, Node n) {
+        public Node(T i, Node p, Node n) {
             item = i;
             previous = p;
             next = n;
@@ -23,10 +25,16 @@ public class LinkedListDeque<T> {
         size = 0;
     }
 
+    public LinkedListDeque(T item) {
+        sentinel = new Node(null, null, null);
+        sentinel.next = new Node(item, null, null);
+        sentinel.previous = sentinel.next;
+    }
+
     /** add and remove operations must not involve any looping or recursion */
     public void addFirst(T item) {
-        sentinel.next = new Node(item, sentinel.previous, sentinel);
-        sentinel.next.next.previous = sentinel.previous;
+        sentinel.next = new Node(item, sentinel, sentinel.next);
+        sentinel.next.next.previous = sentinel.next;
         size++;
     }
 
@@ -37,7 +45,7 @@ public class LinkedListDeque<T> {
     }
 
     public boolean isEmpty() {
-        if (sentinel == sentinel.next && sentinel == sentinel.previous && size == 0) {
+        if (size == 0) {
             return true;
         }
         return false;
@@ -57,7 +65,7 @@ public class LinkedListDeque<T> {
 
     /** add and remove operations must not involve any looping or recursion */
     public T removeFirst() {
-        if (sentinel.next == sentinel) {
+        if (isEmpty()) {
             return null;
         }
         T removedItem = sentinel.next.item;
@@ -65,20 +73,18 @@ public class LinkedListDeque<T> {
         sentinel.next.previous = sentinel;
 
         size--;
-
         return removedItem;
     }
 
     public T removeLast() {
-        if (sentinel.previous == sentinel) {
+        if (isEmpty()) {
             return null;
         }
         T removedItem = sentinel.previous.item;
+        sentinel.previous.previous.next = sentinel;
         sentinel.previous = sentinel.previous.previous;
-        sentinel.previous.next = sentinel;
 
         size--;
-
         return removedItem;
     }
 
