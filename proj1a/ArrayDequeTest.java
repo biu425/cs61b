@@ -214,5 +214,4 @@ public class ArrayDequeTest {
         assertEquals(16, q1.size());
         assertEquals(16, q2.size());
     }
-
 }
