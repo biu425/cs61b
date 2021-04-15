@@ -19,7 +19,7 @@ public class AList<Item> {
     
     public AList() {
         items = (Item[]) new Object[100];
-        sizs = 0;
+        size = 0;
     }
     /** Resizes the underlying array to the target capacity. */
     private void resize(int capacity){

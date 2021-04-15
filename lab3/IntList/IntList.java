@@ -97,11 +97,11 @@ public class IntList {
     //Iterative.
     public static IntList dcatenate(IntList A, IntList B) {
         //TODO:  fill in method
-        if(A == null){
+        if (A == null) {
             return B;
         }
         IntList res = A;
-        while(res.rest != null){
+        while (res.rest != null) {
             res = res.rest;
             continue;
         }
@@ -126,13 +126,13 @@ public class IntList {
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      * recursive
      */
-    public static IntList catenate(IntList A, IntList B){
+    public static IntList catenate(IntList A, IntList B) {
         //TODO:  fill in method
-    if(A == null){
-        return B;
-    } else {
-        return new IntList(A.first, catenate(A.rest,B));
-    }
+        if (A == null) {
+            return B;
+        } else {
+            return new IntList(A.first, catenate(A.rest, B));
+        }
     }
 
     /**
