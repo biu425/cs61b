@@ -59,9 +59,11 @@ public class ArrayDeque<T> {
     //resizing the deque when its usage lower than mRatio
     private void contract() {
         double ratio = (double) size / capacity;
-        if (ratio < minRatio) {
-            int newCapacity = capacity / 2;
-            resize(newCapacity);
+        while (capacity > initialCapacity) {
+            if (ratio < minRatio) {
+                int newCapacity = capacity / 2;
+                resize(newCapacity);
+            }
         }
     }
 
@@ -71,7 +73,7 @@ public class ArrayDeque<T> {
         int currentFirst = indexPlus(nextFirst);
         int currentLast = indexMinus(nextLast);
 
-        if (currentFirst < currentLast ) {
+        if (currentFirst <= currentLast) {
             System.arraycopy(t, currentFirst, newT, 0, size);
         } else if (size != 0) {
             int lengthFirst = capacity - currentFirst;
