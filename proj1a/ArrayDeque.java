@@ -1,8 +1,6 @@
-import org.junit.Test;
-
 public class ArrayDeque<T> {
-    private static int initialCapacity = 8;//starting size of array is 8
-    private static double minRatio = 0.25;//usage factor should be at least 25%
+    private static int initialCapacity = 8; //starting size of array is 8
+    private static double minRatio = 0.25; //usage factor should be at least 25%
 
     private T[] t;
     private int size;
@@ -21,7 +19,7 @@ public class ArrayDeque<T> {
 
     //get the current index according to the circular structure
     private int indexPlus(int index) {
-        if(index == capacity - 1) {
+        if (index == capacity - 1) {
             return 0;
         } else {
             return index + 1;
@@ -29,7 +27,7 @@ public class ArrayDeque<T> {
     }
 
     private int indexMinus(int index) {
-        if(index == 0) {
+        if (index == 0) {
             return capacity - 1;
         } else {
             return index - 1;
@@ -38,7 +36,7 @@ public class ArrayDeque<T> {
 
     //resizing the deque when it is full
     private void expand() {
-        if(size == capacity) {
+        if (size == capacity) {
             int newCapacity = capacity * 2;
             resize(newCapacity);
         }
@@ -46,8 +44,8 @@ public class ArrayDeque<T> {
 
     //resizing the deque when its usage lower than mRatio
     private void contract() {
-        double ratio = (double)size / capacity;
-        if(ratio < minRatio) {
+        double ratio = (double) size / capacity;
+        if (ratio < minRatio) {
             int newCapacity = capacity / 2;
             resize(newCapacity);
         }
@@ -55,17 +53,17 @@ public class ArrayDeque<T> {
 
     //NEED TO CHECK HOW TO DECIDE THE NEXT INDEX
     private void resize(int newCapacity) {
-        T[] newT = (T[])new Object[newCapacity];
+        T[] newT = (T[]) new Object[newCapacity];
         int currentFirst = indexPlus(nextFirst);
         int currentLast = indexMinus(nextLast);
 
-        if(currentFirst < currentLast) {
-            System.arraycopy(t,currentFirst,newT,0,size);
+        if (currentFirst < currentLast) {
+            System.arraycopy(t, currentFirst, newT, 0, size);
         } else {
             int lengthFirst = capacity - currentFirst;
-            System.arraycopy(t,currentFirst,newT,0,lengthFirst);
+            System.arraycopy(t, currentFirst, newT, 0, lengthFirst);
             int lengthLast = nextLast;
-            System.arraycopy(t,0,newT,lengthFirst,lengthLast);
+            System.arraycopy(t, 0, newT, lengthFirst, lengthLast);
         }
         nextFirst = newCapacity - 1;
         nextLast = size;
@@ -76,19 +74,19 @@ public class ArrayDeque<T> {
     public void addFirst(T item) {
         t[nextFirst] = item;
         nextFirst = indexMinus(nextFirst);
-        size ++;
+        size++;
         expand();
     }
 
     public void addLast(T item) {
         t[nextLast] = item;
         nextLast = indexPlus(nextLast);
-        size ++;
+        size++;
         expand();
     }
 
     public boolean isEmpty() {
-        if(size == 0) {
+        if (size == 0) {
             return true;
         }
         return false;
@@ -100,44 +98,45 @@ public class ArrayDeque<T> {
 
     public void printDeque() {
         int index = indexPlus(nextFirst);
-        for (int i = 0; i < size; i++){
-            if(nextFirst > nextLast) {
+        for (int i = 0; i < size; i++) {
+            if (nextFirst > nextLast) {
                 index = (indexPlus(nextFirst) + index + capacity) % capacity;
             }
             System.out.print(t[index] + " ");
-            index ++;
-            }
+            index++;
+        }
     }
 
     public T removeFirst() {
-        if(isEmpty()) {
+        if (isEmpty()) {
             return null;
         }
         int currentFirst = indexPlus(nextFirst);
         T removedItem = t[currentFirst];
         t[currentFirst] = null;
         nextFirst = currentFirst;
-        size --;
+        size--;
 
         contract();
         return removedItem;
     }
 
     public T removeLast() {
-        if(isEmpty()) {
+        if (isEmpty()) {
             return null;
         }
         int currentLast = indexMinus(nextLast);
         T removedItem = t[currentLast];
         t[currentLast] = null;
         nextLast = currentLast;
+        size--;
 
         contract();
         return removedItem;
     }
 
     public T get(int index) {
-        if(index < 0 && index >= size) {
+        if (index < 0 && index >= size) {
             return null;
         }
         int getIndex = (nextFirst + 1 + index) % capacity;
