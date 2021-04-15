@@ -1,15 +1,13 @@
-import org.junit.Test;
-
 public class LinkedListDeque<T> {
     private Node sentinel;
     private int size;
 
     private class Node {
-        public T item;
-        public Node previous;
-        public Node next;
+        T item;
+        Node previous;
+        Node next;
 
-        public Node(T i, Node p, Node n) {
+        Node(T i, Node p, Node n) {
             item = i;
             previous = p;
             next = n;
@@ -23,12 +21,6 @@ public class LinkedListDeque<T> {
         sentinel.next = sentinel;
 
         size = 0;
-    }
-
-    public LinkedListDeque(T item) {
-        sentinel = new Node(null, null, null);
-        sentinel.next = new Node(item, null, null);
-        sentinel.previous = sentinel.next;
     }
 
     /** add and remove operations must not involve any looping or recursion */
