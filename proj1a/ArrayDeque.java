@@ -72,17 +72,17 @@ public class ArrayDeque<T> {
     }
 
     public void addFirst(T item) {
+        expand();
         t[nextFirst] = item;
         nextFirst = indexMinus(nextFirst);
         size++;
-        expand();
     }
 
     public void addLast(T item) {
+        expand();
         t[nextLast] = item;
         nextLast = indexPlus(nextLast);
         size++;
-        expand();
     }
 
     public boolean isEmpty() {
@@ -108,6 +108,7 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
+        contract();
         if (isEmpty()) {
             return null;
         }
@@ -117,11 +118,11 @@ public class ArrayDeque<T> {
         nextFirst = currentFirst;
         size--;
 
-        contract();
         return removedItem;
     }
 
     public T removeLast() {
+        contract();
         if (isEmpty()) {
             return null;
         }
@@ -131,12 +132,11 @@ public class ArrayDeque<T> {
         nextLast = currentLast;
         size--;
 
-        contract();
         return removedItem;
     }
 
     public T get(int index) {
-        if (index < 0 && index >= size) {
+        if (index < 0 || index >= size) {
             return null;
         }
         int getIndex = (nextFirst + 1 + index) % capacity;
