@@ -2,52 +2,49 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TestArrayDequeGold {
-    private String message;
-    //randomly add integers into the deque using StdRandom.uniform
-    private void addInt(StudentArrayDeque<Integer> ad, ArrayDequeSolution<Integer> adSol, Integer i, double random) {
-        //@source: StudentArrayDequeLauncher
-        if (random < 0.5) {
-            ad.addLast(i);
-            adSol.addLast(i);
-            message = "addLast: " + i;
-        } else {
-            ad.addFirst(i);
-            adSol.addFirst(i);
-            message = "addFirst: " + i;
-        }
-    }
-    //randomly remove integers
-    private void removeInt(StudentArrayDeque<Integer> ad, ArrayDequeSolution<Integer> adSol, double random) {
-        Integer expected;
-        Integer actual;
-        if (random < 0.5) {
-            expected = adSol.removeLast();
-            actual = ad.removeLast();
-            message = "removeLast()";
-        } else {
-            expected = adSol.removeFirst();
-            actual = ad.removeFirst();
-            message = "removeFirst()";
-        }
-        assertEquals(message, expected, actual);
-    }
-
     @Test
     public void randomizedTest() {
         StudentArrayDeque<Integer> ad = new StudentArrayDeque<>();
         ArrayDequeSolution<Integer> adSol = new ArrayDequeSolution<>();
 
-        for (Integer i = 0; i < 10; i++) {
-            if (ad.isEmpty()) {
-                double random = StdRandom.uniform();
-                addInt(ad, adSol, i, random);
+        //add
+        for (int i = 0; i < 10; i++) {
+            double random0 = StdRandom.uniform();
+            if (random0 < 0.5) {
+                Integer random = StdRandom.uniform(10);
+                ad.addLast(random);
+                adSol.addLast(random);
+                Integer expected = adSol.get(i);
+                Integer actual = ad.get(i);
+                assertEquals("addLast", expected, actual);
             } else {
-                double random = StdRandom.uniform();
-                removeInt(ad, adSol, random);
+                Integer random = StdRandom.uniform(10);
+                ad.addFirst(random);
+                adSol.addFirst(random);
+                Integer expected = adSol.get(i);
+                Integer actual = ad.get(i);
+                assertEquals("addFirst", expected, actual);
             }
+        }
+
+        //remove
+        if (!ad.isEmpty()) {
+            for (int i = 0; i < 10; i++) {
+                double random = StdRandom.uniform();
+                if (random < 0.5) {
+                    Integer actual = ad.removeLast();
+                    Integer expected = adSol.removeLast();
+                    assertEquals("removeLast", expected, actual);
+                } else {
+                    Integer actual = ad.removeFirst();
+                    Integer expected = adSol.removeFirst();
+                    assertEquals("removeFirst", expected, actual);
+                }
+            }
+        } else {
+            Integer random = StdRandom.uniform(10);
+            ad.addFirst(random);
+            adSol.addFirst(random);
         }
     }
 }
-
-
-
