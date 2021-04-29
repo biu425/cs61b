@@ -73,11 +73,11 @@ public class ArrayRingBuffer<T>  extends AbstractBoundedQueue<T> {
 
 
     //When you get to part 5, implement the needed code to support iteration.
-    private class queIterator implements Iterator<T> {
+    private class QueIterator implements Iterator<T> {
         int ptr;
         int remain;
 
-        queIterator() {
+        QueIterator() {
             ptr = 0;
             remain = fillCount();
         }
@@ -98,6 +98,6 @@ public class ArrayRingBuffer<T>  extends AbstractBoundedQueue<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new queIterator();
+        return new QueIterator();
     }
 }
