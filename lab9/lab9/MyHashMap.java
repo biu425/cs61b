@@ -76,13 +76,13 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
             return;
         }
         if (loadFactor() > MAX_LF) {
-            resize(buckets.length * 2);
+            resize();
         }
         int i = hash(key);
         if (!buckets[i].containsKey(key)) {
             size++;
-            buckets[i].put(key, value);
         }
+        buckets[i].put(key, value);
     }
 
     /* Returns the number of key-value mappings in this map. */
@@ -91,14 +91,17 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         return size;
     }
 
-    private void resize(int newSize) {
-       MyHashMap newBuckets = new MyHashMap(newSize);
-       for (K key : this.keySet()) {
-           newBuckets.put(key, this.get(key));
+    private void resize() {
+       ArrayMap<K, V>[] oldBuckets = buckets;
+       int oldSize = size;
+       buckets = new ArrayMap[buckets.length * 2];
+       clear();
+       size = oldSize;
+       for (int i = 0; i < oldBuckets.length; i++) {
+           for (K key : oldBuckets[i]) {
+               buckets[hash(key)].put(key, oldBuckets[i].get(key));
+           }
        }
-       this.size = newBuckets.size;
-       this.buckets = newBuckets.buckets;
-
     }
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////
