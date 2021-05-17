@@ -3,7 +3,6 @@ package hw3.hash;
 import org.junit.Test;
 
 
-import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
@@ -29,10 +28,11 @@ public class TestSimpleOomage {
           hashCode UNLESS they have the same red, blue, and green values!
          */
         HashSet<Integer> hashCodeSet = new HashSet<>();
-        for (int i = 0; i <=255; i += 5) {
+        for (int i = 0; i <= 255; i += 5) {
             for (int j = 0; j <= 255; j += 5) {
-                for (int k = 0; k <= 255; k += 5){
+                for (int k = 0; k <= 255; k += 5) {
                     SimpleOomage so = new SimpleOomage(i, j, k);
+
                     assertFalse(hashCodeSet.contains(so.hashCode()));
                     hashCodeSet.add(so.hashCode());
                 }

@@ -17,14 +17,14 @@ public class SimpleOomage implements Oomage {
         if (o == null) {
             return false;
         }
-        if (o == this){
+        if (o == this) {
             return true;
         }
         if (o.getClass() != this.getClass()) {
             return false;
         }
         SimpleOomage other = (SimpleOomage) o;
-        return(other.red == this.red) && (other.blue == this.blue) && (other.green == this.green);
+        return (other.red == this.red) && (other.blue == this.blue) && (other.green == this.green);
     }
 
     // Uncomment this method after you've written
@@ -35,10 +35,11 @@ public class SimpleOomage implements Oomage {
             return red + green + blue;
         } else {
             // Write a perfect hash function for Simple Oomages.
+            // 最小52就可以（> 255 / 5)
             int perfectCode = 0;
             perfectCode += (red / 5);
-            perfectCode += (green / 5) * 53;
-            perfectCode += (blue / 5) * 53 * 71;
+            perfectCode += (green / 5) * 52;
+            perfectCode += (blue / 5) * 52 * 52;
 
             return perfectCode;
         }
