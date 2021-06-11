@@ -1,4 +1,5 @@
 import edu.princeton.cs.algs4.Queue;
+import org.junit.Test;
 
 public class MergeSort {
     /**
@@ -35,7 +36,13 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Queue<Item>>
             makeSingleItemQueues(Queue<Item> items) {
         // Your code here!
-        return null;
+        Queue<Queue<Item>> QQ = new Queue<>();
+        for (Item item : items){
+            Queue<Item> curQueue = new Queue<>();
+            curQueue.enqueue(item);
+            QQ.enqueue(curQueue);
+        }
+        return QQ;
     }
 
     /**
@@ -54,13 +61,40 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Item> mergeSortedQueues(
             Queue<Item> q1, Queue<Item> q2) {
         // Your code here!
-        return null;
+        Queue<Item> queue = new Queue<>();
+        while (!q1.isEmpty() && q2.isEmpty()) {
+            queue.enqueue(getMin(q1, q2));
+        }
+        return queue;
     }
 
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
-        // Your code here!
+        // TODO: Your code here!
+//        if (items.size() <= 1) {
+//            return items;
+//        }
+//        Queue<Queue<Item>> origin = makeSingleItemQueues(items);
+//        while (origin.size() > 1) {
+//            Queue q1 = origin.dequeue();
+//            Queue q2 = origin.dequeue();
+//            origin.enqueue(mergeSortedQueues(q1, q2));
+//        }
+//            return origin.dequeue();
         return items;
+    }
+
+    @Test
+    public static void main(String[] args) {
+        Queue<String> students = new Queue<>();
+        students.enqueue("Alice");
+        students.enqueue("Vanessa");
+        students.enqueue("Ethan");
+        students.enqueue("Biu");
+        System.out.println("origin: " + students);
+        Queue<String> result = MergeSort.mergeSort(students);
+        System.out.print("sorted: " + result );
+
     }
 }
